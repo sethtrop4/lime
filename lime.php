@@ -666,7 +666,23 @@ class lime {
 			throw new Bug($this->expect_conflicts .' conflicts expected, got ' . $this->conflicts);
 		}
 
+		$this->compress($i);
+
 		return $this->lang->ptab_to_class($this->parser_class, compact('a', 'qi', 'i', 'd'));
+	}
+
+	function compress(&$i) {
+		foreach ($i as &$inst) {
+			$act = reset($inst);
+			if (substr($act, 0, 2) == 'r ') {
+				foreach ($inst as $k => $a) {
+					if ($a !== $act) {
+						continue(2);
+					}
+				}
+				$inst = array('' => $act);
+			}
+		}
 	}
 
 	function rule_table() {

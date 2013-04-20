@@ -263,11 +263,13 @@ class parse_engine {
 
 	private function step_for($type) {
 		$row = $this->current_row();
-		if (!isset($row[$type])) {
-			return array('e', $this->stack->q);
+		if (isset($row[$type])) {
+			return explode(' ', $row[$type]);
 		}
-
-		return explode(' ', $row[$type]);
+		if (isset($row[''])) {
+			return explode(' ', $row['']);
+		}
+		return array('e', $this->stack->q);
 	}
 
 	private function get_steps() {
@@ -281,7 +283,7 @@ class parse_engine {
 
 			list($opcode) = explode(' ', $row, 2);
 			if ($opcode != 'e') {
-				$out[] = $type;
+				$out[] = $type === '' ? '$default' : $type;
 			}
 		}
 
