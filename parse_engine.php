@@ -343,6 +343,7 @@ class parse_engine {
 				if ($this->has_step_for($type)) {
 					$this->eat($type, $semantic);
 				}
+				return false;
 			} else {
 				// If that didn't work, give up:
 				throw new parse_error('Parse Error: ' . $this->descr($type, $semantic) . ' not expected, expected one of ' . implode(', ', $expected));
@@ -351,6 +352,7 @@ class parse_engine {
 		default:
 			throw new parse_bug("Bad parse table instruction " . htmlspecialchars($opcode));
 		}
+		return true;
 	}
 
 	private function descr($type, $semantic) {
