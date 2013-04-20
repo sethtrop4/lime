@@ -59,7 +59,8 @@ BLOCKCMT "/*"({CC}|{CX})*{CT}
 
 {STOP} out("stop", ".");
 {SYM} tok("sym");
-{LIT} tok("lit");
+\"{DCHAR}*\" tok("str");
+'{SCHAR}*' tok("str");
 {BLOCKCMT} {}
 "/"{WORD}+ |
 "/$" out("lambda", yytext+1);

@@ -21,7 +21,7 @@ action : $$ = new lime_action($1, NULL);
 action lambda : $$ = new lime_action($1, $2);
 sym : $$ = new lime_glyph($1, NULL);
 sym lambda : $$ = new lime_glyph($1, $2);
-lit : $$ = new lime_glyph($1, NULL);
+str : $$ = new lime_glyph(substr($1, 1, -1), NULL);
 to slot
 : $$ = new lime_rhs();
 rhs slot : $$->add($2);
