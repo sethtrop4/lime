@@ -334,7 +334,7 @@ class parse_engine {
 			// get these before doing anything
 			$expected = $this->get_steps();
 
-			$this->parser->errors[] = $this->descr($type, $semantic) . ' not expected, expected {' . implode(', ', $expected) . '}';
+			$this->parser->errors[] = $this->descr($type, $semantic) . ' not expected, expected one of ' . implode(', ', $expected);
 
 			if ($this->debug) echo "Possibilities before error fixing: {" . implode(', ', $expected) . "}\n";
 
@@ -345,7 +345,7 @@ class parse_engine {
 				}
 			} else {
 				// If that didn't work, give up:
-				throw new parse_error('Parse Error: ' . $this->descr($type, $semantic) . ' not expected, expected {' . implode(', ', $expected) . '}');
+				throw new parse_error('Parse Error: ' . $this->descr($type, $semantic) . ' not expected, expected one of ' . implode(', ', $expected));
 			}
 			break;
 		default:
@@ -356,8 +356,10 @@ class parse_engine {
 	private function descr($type, $semantic) {
 		if (isset($this->descr[$type])) {
 			return $this->descr[$type];
-		} else {
+		} elseif ("$semantic" !== "") {
 			return $type . ' (' . $semantic . ')';
+		} else {
+			return $type;
 		}
 	}
 
